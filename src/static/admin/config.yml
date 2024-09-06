@@ -1,0 +1,176 @@
+backend:
+  name: git-gateway
+  # name: proxy
+  branch: main # Branch to update (optional; defaults to master)
+  # proxy_url: http://localhost:8081/api/v1
+  accept_roles: #optional - accepts all users if left out
+    - admin
+    - editor
+  # repo: brandnewguys/companysite_11ty # Path to your GitHub repository
+# This line should *not* be indented
+  publish_mode: editorial_workflow
+logo_url: /static/img/bng-black.svg
+local_backend: true
+
+# This line should *not* be indented
+media_folder: "/src/static/img/uploads/" # Media files will be stored in the repo under img/portfolio-content/Netlify-cms
+public_folder: "/"
+
+collections:
+  - name: deepcuts
+    label: Deepcuts
+    label_singular: Deepcut
+    create: true
+    folder: "/src/deepcuts"
+    fields:
+      - {label: "Title", name: title, widget: "string"}
+      - {label: "Published", name: published, widget: "boolean"}
+      - {label: "subtitle", name: "subtitle", widget: "string", required: false}
+      - {label: "Recording date", name: "recording_date", widget: "datetime", required: false}
+      - {label: "Layout", name: "layout", widget: "hidden", default: "podcast_single.liquid"}
+      - {label: "Tags", name: "tags", widget: "hidden", default: "podcast"}
+      - {label: "Image", name: "image", widget: "image", required: false}
+      - {label: "Spotify", name: "spotify_url", widget: "string", required: false}
+      - {label: "Apple", name: "apple_url", widget: "string", required: false}
+      - {label: "Google", name: "google_url", widget: "string", required: false}
+      - {label: "Stitcher", name: "stitcher_url", widget: "string", required: false}
+      - {label: "Radiopublic", name: "radiopublic_url", widget: "string", required: false}
+      - {label: "Embedded player url", name: "embedded_player", widget: "string", required: false}
+      - label: "Guests"
+        name: "guests"
+        label_singular: "guest"
+        widget: "list"
+        allow_add: true
+        fields:
+              - { label: Guestname, name: guest_name, widget: string }
+              - { label: Guest url, name: guest_url, widget: string }
+      - label: Body
+        name: body
+        widget: markdown
+
+  - label: "Cases"
+    name: "cases"
+    folder: "/src/cases"
+    create: true
+    slug: "{{ priority }}-{{ title }}"
+    fields: 
+      - {label: "Priority", name: "priority", widget: "string"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Image", name: "img", widget: "image", allow_multiple: false}
+      - {label: "Url", name: "url", widget: "string"}
+  - label: "Navigation"
+    name: "navigation"
+    folder: "/src/navigation_items"
+    create: true
+    fields: 
+      - {label: "Priority", name: "priority", widget: "string"}
+      - {label: "Description", name: description, widget: "markdown"}
+      - {label: "Clever", name: clever, widget: "string"}
+      - {label: "Title", name: title, widget: "string"}
+      - {label: "Layout", name: layout, widget: "hidden", default: "nav"}
+      - {label: "Image", name: "img", widget: "image", allow_multiple: false, required: false}
+      - {label: "Url", name: "url", widget: "string"}
+  - label: "Product pages"
+    name: "products"
+    folder: "/src/services"
+    create: true
+    slug: "{{ title }}"
+    fields:
+      - {label: "Title", name: title, widget: "string"}
+      - {label: "TL:DR", name: tldr, widget: "string", required: false}
+      - {label: "Layout", name: layout, widget: "hidden", default: "product_page.liquid"}
+      - {label: "Body", name: body, widget: "markdown"}
+      - label: "Content blocks"
+        name: "contentBlocks"
+        widget: "list"
+        fields:
+          - { label: "Block Title", name: "blocktitle", widget: "string", default: "Block title", required: false }
+          - { label: "Content", name: "contentbody", widget: markdown, required: false }
+          - { label: "Quote", name: "blockquote", widget: "string", default: "quote", required: false }
+          - { label: "Background Image", name: "bg_image", widget: image, required: false }
+          - { label: "Background Video", name: "bg_video", widget: file, required: false }
+          - { label: "Link url 1", name: "link_url_1", widget: "string", required: false }
+          - { label: "Link text 1", name: "link_text_1", widget: "string", default: "link 1", required: false }
+          - { label: "Link url 2", name: "link_url_2", widget: "string", required: false }
+          - { label: "Link text 2", name: "link_text_2", widget: "string", default: "link 1", required: false }
+          - { label: "Show Logo?", name: "logo", widget: "boolean", required: false }
+
+  - label: "Events"
+    name: "events"
+    folder: "/src/events"
+    create: true
+    slug: "{{ date }}-{{ title }}"
+    fields: 
+      - {label: "Date", name: "date", widget: "date"}
+      - {label: "Layout", name: "layout", default: "event_gallery", widget: hidden}
+      - {label: "Title", name: title, widget: "string"}
+      - {label: "Host", name: host, widget: "string"}
+      - {label: "Deepcut", name: deepcut, widget: "string", required: false}
+      - {label: "Image", name: "img", widget: "image", allow_multiple: false}
+      - {label: "Url", name: "url", widget: "string"}
+      - {label: "Tags", name: "tags", widget: "list", default: "hotel-lobi"}
+      - label: Body
+        name: body
+        widget: markdown
+        pattern: ['.{5,50}', "Must have 5 - 50 characters"]
+      - {label: "Gallery Download", name: "galleryDownload", widget: "string", required: false}
+      - label: "Gallery"
+        name: "galleryImages"
+        widget: "list"
+        fields:
+          - { label: "Image", name: "image", widget: image }
+          - { label: "Link text", name: "link_text", widget: "string", default: "more", required: false }
+          - { label: "URL", name: "url", widget: "string", required: false }
+          - { label: "Description", name: "description", widget: "markdown", required: false }
+
+
+  - label: "Pages"
+    name: "pages"
+    files:
+      - label: "Home Page"
+        name: "index"
+        file: "/src/index.md"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Description", name: "description", widget: "string"}
+          - {label: "Author", name: "author", widget: "string"}
+          - {label: "Background", name: "background", widget: "image", allow_multiple: false}
+          - {label: "Logo", name: "logo", widget: "image", allow_multiple: false}
+          - {label: "Version", name: "version", widget: "string"}
+          - label: "Location"
+            name: "location"
+            widget: "object"
+            summary: "{{fields.label}}"
+            fields: 
+              - {label: "Label", name: "label", widget: "string"}
+              - {label: "Url", name: "url", widget: "string"}
+          - {label: "Instagram url", name: "instagram", widget: "string"}
+          - {label: "Phone", name: "phone", widget: "string"}
+          - {label: "Introduction", name: "intro", widget: "string"}
+
+      - label: "Now Playing Page"
+        name: "nowplaying"
+        file: "/src/static/nowplaying.md"
+        fields:
+          - {label: "Layout", name: "layout", widget: "hidden", default: "nowplaying"}
+          - {label: "Client", name: "client", widget: "string"}
+          - {label: "Wifinetwork", name: "wifi_network", widget: "hidden", default: "wecaneat"}
+          - {label: "Wifi", name: "wifi_code", widget: "hidden", default: "BNG"}
+          - {label: "Agenda 1", name: "agenda1", widget: "string"}
+          - {label: "Agenda 2", name: "agenda2", widget: "string"}
+          - {label: "Agenda 3", name: "agenda3", widget: "string"}
+          - {label: "Agenda 4", name: "agenda4", widget: "string"}
+          - {label: "Balie animatie", name: "balie_movie", widget: "file"}
+
+      - label: "Be Cam Page"
+        name: "becam"
+        file: "/src/becam.md"
+        fields:
+          - {label: "Dropbox link", name: "dropbox_link", widget: "string"}
+
+      - label: "Culture"
+        name: "culture"
+        file: "/src/culture.md"
+        fields:
+          - {label: "Layout", name: "layout", widget: "hidden", default: "culture.html", required: false}
+          - {label: "Body", name: "body", widget: "markdown"}

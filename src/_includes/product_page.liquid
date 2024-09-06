@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		{% include '_tag_head.html' %}
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{{ title }}</title>
+		<meta name="description" content="{{ tldr}}" />
+		<meta name="keywords" content="brand strategy and identity by Brand New Guys" />
+		<meta name="author" content="BRAND NEW GUYS" />
+		<!-- <link rel="icon" href="/static/img/favicon.ico"> -->
+		<link rel="stylesheet" type="text/css" href="/dist/index.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/product_page.css" />
+		<script>document.documentElement.className="js";</script>
+	</head>
+	<body class="product">
+		{% include '_tag_body.html' %}
+		<div class="js-content service">	
+			<div class="content content--highlight content--intro">
+				<div class="hero">
+					<h2 class="content__title">{{ title }}</h2>
+					<p class="text-meta">{{ tldr }}</p>
+				</div>
+				<p class="text-large">{{ content | strip_html}}</p>
+			</div>
+			<div class="wrap">
+				{% for block in contentBlocks %}
+				  <div class="content content--sticky content--half bg-7" style="{% if block.bg_image != blank %} background-image: url('/static/img/uploads/{{ block.bg_image }}');{% endif %}" >
+				  	{% if block.link_url_2 != blank %}
+				  		<div class="cta-grid"><!--  start CTA block -->
+				  			{% if block.bg_video != blank %}
+							<div class="video-container"><video src="/static/img/uploads/{{ block.bg_video }}" autoplay="true" muted playsinline loop></video></div>
+							{% endif %}
+				  			{% if block.logo == true %}
+							<!-- <span class="logo">BNG</span> -->
+							{% endif %}
+							{% if block.logo == true %}
+							<span class="quote">{{ block.quote }}</span>
+							{% endif %}
+							<a class="content-button content-button--atlas case" href="{{ block.link_url_1 }}"> <span>{{ block.link_text_1 }}</span> <div class="marquee" aria-hidden="true"> <div class="marquee__inner"> <span>{{ block.link_text_1 }}</span> <span>{{ block.link_text_1 }}</span> <span>{{ block.link_text_1 }}</span> <span>{{ block.link_text_1 }}</span> </div> </div></a>
+							<span class="or">or</span>
+							<a href="{{ block.link_url_2 }}" target="_blank" class="content-button content-button--narvi book"><span><span>{{ block.link_text_2 }}</span></span></a>
+				  	{% endif %}
+
+				  	{% if block.link_url_2 != blank %}
+				  		</div><!--  end CTA block -->
+				  	{% else %}
+				  		<h2 class="content__title">{{ block.blocktitle }}</h2>
+						<p class="text-large">{{ block.contentbody}}</p>
+					{% endif %}
+				  </div>
+				{% endfor %}
+			</div>
+			{% include 'cta-footer.html' %}
+		</div>
+		{% include 'header_nav.html' %}
+		<script src="/static/js/product_page/gsap.min.js"></script>
+		<script src="/static/js/product_page/ScrollTrigger.min.js"></script>
+		<script src="/static/js/product_page/lenis.min.js"></script>
+		<script src="/static/js/imagesloaded.pkgd.min.js"></script>
+		<script type="module" src="/static/js/product_page/index.js"></script>
+		<!-- highlight -->
+		<script src="/static/js/product_page/gsap.min.js"></script>
+	    <script src="/static/js/product_page/splitting.min.js"></script>
+	    <script src="/static/js/product_page/ScrollTrigger.min.js"></script>
+	    <script src="/static/js/product_page/Flip.min.js"></script>	    
+	    <!-- Remove the following two lines if you don't want smooth scrolling -->
+		<script src="/static/js/product_page/smoothscroll.js"></script>
+		<script src="/dist/index.js"></script>
+	</body>
+</html>
